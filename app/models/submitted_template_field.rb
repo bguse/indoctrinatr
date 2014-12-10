@@ -19,7 +19,16 @@ class SubmittedTemplateField < ActiveRecord::Base
   delegate :name, to: :template_field
   delegate :to_form_label, to: :template_field
 
+  # Callbacks
+  after_initialize :set_value_to_empty_string
+
+  def set_value_to_empty_string
+    return value if value.present?
+    self.value = ''
+  end
+
   def value_or_default
-    value || template_field.default_value
+    return value if value.present?
+    template_field.default_value
   end
 end
