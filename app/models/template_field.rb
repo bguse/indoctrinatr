@@ -26,10 +26,18 @@ class TemplateField < ActiveRecord::Base
 
   # validations
   validates :name, presence: true, uniqueness: { scope: :template_id }
+  # validates :default_value, presence: true
   validates :presentation, inclusion: VALID_PRESENTATIONS
   validates :available_options, presence: true, if: :requires_available_options?
   validates :start_of_range, presence: true, if: :range?
   validates :end_of_range, presence: true, if: :range?
+
+  # Callbacks
+  before_validation :set_default_value_to_empty_string
+
+  def set_default_value_to_empty_string
+    self.default_value = self.default_value || '' # MySQL sucks!
+  end
 
   def available_options_as_collection
     available_options.split(',').map(&:strip)
