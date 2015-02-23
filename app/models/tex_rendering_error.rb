@@ -1,0 +1,2 @@
+class TexRenderingError < StandardError
+end

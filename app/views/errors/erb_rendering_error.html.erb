@@ -1,0 +1,18 @@
+<div class='row'>
+  <div class='large-12 column'>
+    <h1>Error while ERB rendering</h1>
+    <dl class="sub-nav">
+      <dt>Jump to:</dt>
+      <dd><%= link_to 'Error Message', '#error_message' %></dd>
+      <dd><%= link_to 'ERB Template', '#erb_template' %></dd>
+    </dl>
+    <h2><a name="error_message">Error Message</a></h2>
+    <div class="panel">
+      <pre><%= @error_message %></pre>
+    </div>
+    <h2><a name="erb_template">ERB Template</a></h2>
+    <div class="panel">
+      <pre><%= @erb_template %></pre>
+    </div>
+  </div>
+</div>

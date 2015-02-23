@@ -1,0 +1,2 @@
+class ERBRenderingError < StandardError
+end

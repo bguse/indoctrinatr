@@ -4,7 +4,7 @@
 #
 #  id                :integer          not null, primary key
 #  name              :string(255)      default(""), not null
-#  default_value     :string(255)      default(""), not null
+#  default_value     :text             not null
 #  presentation      :string(255)      default("text"), not null
 #  template_id       :integer          not null
 #  created_at        :datetime
@@ -12,11 +12,12 @@
 #  available_options :text
 #  start_of_range    :integer
 #  end_of_range      :integer
+#  label             :string(255)
 #
 
 class TemplateField < ActiveRecord::Base
   # class wide constants
-  VALID_PRESENTATIONS = %w(text textarea checkbox radiobutton dropdown date range)
+  VALID_PRESENTATIONS = %w(text textarea checkbox radiobutton dropdown date range file)
   REQUIRES_AVAILABLE_OPTIONS = %w(dropdown checkbox radiobutton)
 
   # associations
@@ -45,6 +46,10 @@ class TemplateField < ActiveRecord::Base
 
   def range?
     'range' == presentation
+  end
+
+  def file?
+    'file' == presentation
   end
 
   def requires_available_options?
