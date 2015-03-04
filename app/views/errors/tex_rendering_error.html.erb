@@ -1,5 +1,6 @@
 <div class='row'>
-  <div class='large-12 column'><h1>Error while TeX rendering</h1>
+  <div class='large-12 column'>
+    <h1>Error while TeX rendering</h1>
     <dl class="sub-nav">
       <dt>Jump to:</dt>
       <dd><%= link_to 'Error Message', '#error_message' %></dd>
@@ -7,11 +8,17 @@
       <dd><%= link_to 'TeX Template', '#tex_template' %></dd>
       <dd><%= link_to 'ERB Template', '#erb_template' %></dd>
     </dl>
+    <h2>Raven Event ID</h2>
+    <div class="panel">
+      <pre><%= @raven_event_id %></pre>
+    </div>
     <h2><a name="error_message">Error Message</a></h2>
     <div class="panel">
       <pre><%= @error_message %></pre>
     </div>
     <h2><a name="tex_log_file">TeX Log File</a></h2>
+    <div class="panel">
+      <pre><%= @tex_log_file %></pre>
     </div>
     <h2><a name="tex_template">TeX Template</a></h2>
     <div class="panel">
@@ -21,4 +28,5 @@
     <div class="panel">
       <pre><%= @erb_template %></pre>
     </div>
+  </div>
 </div>

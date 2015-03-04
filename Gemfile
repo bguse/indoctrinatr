@@ -29,6 +29,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Sentry logging
+gem "sentry-raven", github: 'getsentry/raven-ruby'
+
 # Frontend stuff
 gem 'foundation-rails', '~> 5.5.0'
 gem 'simple_form', '~> 3.1.0'
