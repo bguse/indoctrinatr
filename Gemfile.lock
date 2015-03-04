@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/getsentry/raven-ruby.git
+  revision: e87590fbdfc53a90eca1e56804c546aee99918b2
+  specs:
+    sentry-raven (0.12.3)
+      faraday (>= 0.7.6)
+
+GIT
   remote: git://github.com/ncreuschling/rails-latex.git
   revision: 4bba7bb79a7c748f69ccacb5e92e4f34ca9fdc5d
   specs:
@@ -81,6 +88,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     formatador (0.2.5)
     foundation-icons-sass-rails (3.0.0)
@@ -138,6 +147,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.5.1)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.17)
     nenv (0.2.0)
     nested_form (0.3.2)
@@ -313,6 +323,7 @@ DEPENDENCIES
   rubyzip (~> 1.1.6)
   sass-rails (~> 5.0.0)
   sdoc (~> 0.4.0)
+  sentry-raven!
   shoulda (~> 3.5.0)
   simple_form (~> 3.1.0)
   spring-commands-rspec (~> 1.0.2)
