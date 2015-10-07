@@ -14,11 +14,19 @@ module Api
       def generate # rubocop:disable Metrics/AbcSize
         @template = Template.find params[:id]
         @document_submission = DocumentSubmissionBuilder.build_via_api @template, params
+
+
+        unless @document_submission.save
+          render text: @document_submission.errors.full_messages, status: 400
+          return
+        end
+
         @submitted_values = @document_submission.submitted_values
         tex_template = ERBRendering.new(@document_submission.content, @submitted_values.retrieve_binding).call
 
         if params[:debug].present? && params[:debug] == 'true'
-          render text: tex_template, content_type: 'text/plain' and return
+          render text: tex_template, content_type: 'text/plain'
+          return
         end
 
         pdf = TexRendering.new(tex_template).call

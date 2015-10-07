@@ -19,7 +19,7 @@ class DocumentSubmissionsController < ApplicationController
 
   # GET /document_submissions
   def index
-    @document_submissions = DocumentSubmission.all.recent_first.page params[:page]
+    @document_submissions = DocumentSubmission.includes(:template).all.recent_first.page params[:page]
   end
 
   def show # rubocop:disable Metrics/AbcSize
@@ -29,7 +29,8 @@ class DocumentSubmissionsController < ApplicationController
     @tex_template = ERBRendering.new(@erb_template, @submitted_values.retrieve_binding).call
 
     if params[:debug].present? && params[:debug] == 'true'
-      render text: @tex_template, content_type: 'text/plain' and return
+      render text: @tex_template, content_type: 'text/plain'
+      return
     end
 
     pdf = TexRendering.new(@tex_template).call

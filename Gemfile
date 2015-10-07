@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.1.5'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.0'
+gem 'rails', '~> 4.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -33,7 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "sentry-raven", github: 'getsentry/raven-ruby'
 
 # Frontend stuff
-gem 'foundation-rails', '~> 5.5.0'
+gem 'foundation-rails', '~> 5.5'
 gem 'simple_form', '~> 3.1.0'
 gem 'nested_form', '~> 0.3.2'
 gem 'foundation-icons-sass-rails', '~> 3.0.0'
@@ -50,7 +48,7 @@ group :development, :test do
   gem 'growl', '~> 1.0.3' # OR use: gem 'terminal-notifier-guard'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'shoulda', '~> 3.5.0'
-  gem 'listen', '~> 2.8.1'
+  gem 'listen', '~> 2.10.0'
 end
 
 # Development tools
@@ -64,7 +62,7 @@ group :development do
   gem 'rubocop', '~> 0.28.0'
 end
 
-gem 'rails-latex', github: 'ncreuschling/rails-latex'
+gem 'rails-latex', '~> 1.0'
 gem 'erubis', '~> 2.7.0'
 gem 'paperclip', '~> 4.2.0'
 gem 'rubyzip', '~> 1.1.6'
