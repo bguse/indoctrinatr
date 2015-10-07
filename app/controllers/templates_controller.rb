@@ -4,7 +4,7 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.all.page params[:page]
+    @templates = Template.includes(:template_fields).search(params[:search]).page params[:page]
   end
 
   # GET /templates/new
@@ -59,6 +59,6 @@ class TemplatesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def template_params
-    params.require(:template).permit(:name, :content, template_fields_attributes: [:id, :name, :label, :start_of_range, :end_of_range, :default_value, :available_options, :presentation, :_destroy])
+    params.require(:template).permit(:name, :content, :textual_description, template_fields_attributes: [:id, :name, :label, :start_of_range, :end_of_range, :required, :default_value, :available_options, :presentation, :_destroy])
   end
 end

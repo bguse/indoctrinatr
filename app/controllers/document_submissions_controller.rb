@@ -2,20 +2,35 @@ class DocumentSubmissionsController < ApplicationController
   before_action :set_template, only: [:with_defaults, :new]
   before_action :set_document_submission, only: [:show, :edit, :update, :destroy]
 
+  rescue_from 'ERBRenderingError' do |exception|
+    @error_message = exception.message
+    render 'errors/erb_rendering_error', status: :internal_server_error, formats: :html
+  end
+
+  rescue_from 'TexRenderingError' do |exception|
+    @error_message = exception.message
+    @tex_log_file = File.read(@error_message[%r{\/.*\/input\.log}])
+    render 'errors/tex_rendering_error', status: :internal_server_error, formats: :html
+  end
+
   # GET /document_submissions
   def index
-    @document_submissions = DocumentSubmission.all.recent_first.page params[:page]
+    @document_submissions = DocumentSubmission.includes(:template).all.recent_first.page params[:page]
   end
 
   def show # rubocop:disable Metrics/AbcSize
     @document_submission = DocumentSubmission.find params[:id]
     @submitted_values = @document_submission.submitted_values
+    @erb_template = @document_submission.content
+    @tex_template = ERBRendering.new(@erb_template, @submitted_values.retrieve_binding).call
+
     if params[:debug].present? && params[:debug] == 'true'
-      render text: ERB.new(@submitted_values, nil, '-').result(@submitted_values.retrieve_binding), content_type: 'text/plain'
-    else
-      pdf = LatexToPdf.generate_pdf(ERB.new(@document_submission.content, nil, '-').result(@submitted_values.retrieve_binding), command: 'xelatex', parse_twice: true)
-      send_data pdf, filename: @submitted_values.customized_output_file_name
+      render text: @tex_template, content_type: 'text/plain'
+      return
     end
+
+    pdf = TexRendering.new(@tex_template).call
+    send_data pdf, filename: @submitted_values.customized_output_file_name
   end
 
   # POST /document_submissions/with_defaults
@@ -64,6 +79,6 @@ class DocumentSubmissionsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def document_submission_params
-    params.require(:document_submission).permit(:template_id, submitted_template_fields_attributes: [:id, :value, :template_field_id, :start_of_range, :end_of_range])
+    params.require(:document_submission).permit(:template_id, submitted_template_fields_attributes: [:id, :value, :template_field_id, :start_of_range, :end_of_range, :file_upload])
   end
 end

@@ -19,59 +19,72 @@
 //= require turbolinks
 
 
-$(function() {
-  $(document).foundation();
+$(function () {
+    $(document).foundation();
 });
 
-function presentationVisibiltyUpdater()
-{
-  var chosen = $(this).val();
-  var panel = $(this).closest(".panel");
+function presentationVisibilityUpdater() {
+    var chosen = $(this).val();
+    var panel = $(this).closest(".panel");
 
-  hideAllField(panel);
+    hideAllFields(panel);
 
-  if (chosen == "checkbox" || chosen == "radiobutton" || chosen == "dropdown" || chosen == "date") {
-    showTextField(panel);
-  }else if (chosen == "range") {
-    showRangeField(panel);
-  }
+    if (chosen == "checkbox" || chosen == "radiobutton" || chosen == "dropdown") {
+        showTextField(panel);
+    } else if (chosen == "range") {
+        showRangeField(panel);
+    } else if (chosen == "file") {
+        hideAllFields(panel);
+        hideDefaultField(panel);
+    } else if (chosen == "date") {
+        hideAllFields(panel);
+    }
 }
 
-$(document).ready(function() {
-  $(".presentation").each(presentationVisibiltyUpdater);
-  $('body').on('change', '.presentation', presentationVisibiltyUpdater);
+$(document).ready(function () {
+    $(".presentation").each(presentationVisibilityUpdater);
+
+    $('body').on('change', '.presentation', presentationVisibilityUpdater);
+
+    $('#template_search input').keyup(function() {
+      $.get($('#template_search').attr('action'), $('#template_search').serialize(), null, 'script');
+      return false;
+    });
 });
 
-$(document).on('nested:fieldAdded', function(event){
-  // Insert Attribute Name in created panel
-  var panel = $("#field-wrapper .fields:last .input input:first");
-  panel.val($("#attr-name").val());
-  $("#attr-name").val("");
-  $('#add-panel').show();
-  presentationVisibiltyUpdater.call($("#field-wrapper .fields:last .input .presentation"));
-})
+$(document).on('nested:fieldAdded', function (event) {
+    // Insert Attribute Name in created panel
+    var panel = $("#field-wrapper .fields:last .input input:first");
+    panel.val($("#attr-name").val());
+    $("#attr-name").val("");
+    $('#add-panel').show();
+    presentationVisibilityUpdater.call($("#field-wrapper .fields:last .input .presentation"));
+});
 
-  function showTextField (panel) {
+function showTextField(panel) {
     panel.find(".textfield").show();
     panel.find(".rangefield").hide();
-  }
+}
 
-  function showRangeField (panel) {
+function showRangeField(panel) {
     panel.find(".textfield").hide();
     panel.find(".rangefield").show();
-  }
+}
 
-  function hideAllField(panel) {
+function hideDefaultField(panel) {
+    panel.find(".text").hide();
+}
+
+function hideAllFields(panel) {
     panel.find(".textfield").hide();
     panel.find(".rangefield").hide();
-  }
+}
 
-
-$(function() {
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    constrainInput: true,
-    showOn: 'both',
-    buttonText: '<i class="fi-calendar"></i>'
-  });
+$(function () {
+    $('.datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        constrainInput: true,
+        showOn: 'both',
+        buttonText: '<i class="fi-calendar"></i>'
+    });
 });

@@ -3,12 +3,11 @@ require 'zip'
 class TemplatePackProcessor
   attr_reader :template_pack, :template
 
-  def initialize template_pack_attributes
-    @template_pack_attributes = template_pack_attributes
+  def initialize template_pack
+    @template_pack = template_pack
   end
 
   def run
-    create_template_pack
     unzip_container
     process_configuration_file
     extract_tex_template
@@ -18,10 +17,6 @@ class TemplatePackProcessor
   end
 
   private
-
-  def create_template_pack
-    @template_pack = TemplatePack.create @template_pack_attributes
-  end
 
   def unzip_container
     Zip::File.open @template_pack.zip_container.path do |zip_file|
@@ -37,7 +32,8 @@ class TemplatePackProcessor
     config_file_content = File.read @template_pack.path_to_config_file
     @template_config = YAML.load config_file_content
     @template_name = @template_config.fetch 'template_name', @template_name
-    @output_file_name = @template_config.fetch 'output_file_name', @template_name
+    @output_file_name = @template_config.fetch 'output_file_name', "#{@template_name}.pdf"
+    @textual_description = @template_config.fetch 'textual_description', ''
   end
 
   def extract_tex_template
@@ -51,15 +47,15 @@ class TemplatePackProcessor
   def create_template_and_template_attributes
     @template = Template.new do |template|
       template.name = @template_name
-      template.template_asset_path = File.join(@template_pack.path_to_extracted_container, 'assets')
       template.output_file_name = @output_file_name
       template.content = @template_content
+      template.textual_description = @textual_description
       template.template_pack = @template_pack
       template.template_fields_attributes = @template_fields_attributes
     end
   end
 
   def save_template
-    @template.save
+    @template.save!
   end
 end
