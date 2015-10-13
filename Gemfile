@@ -8,6 +8,8 @@ gem 'sass-rails', '~> 5.0.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -20,6 +22,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
+
+# Use unicorn as the app server
+# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -68,6 +73,7 @@ gem 'paperclip', '~> 4.2.0'
 gem 'rubyzip', '~> 1.1.6'
 gem 'to_latex', '~> 0.5.0'
 gem 'RedCloth', '~> 4.2.9'
+gem 'kramdown', '~> 1.9.0'
 
 # Add group for mysql Support
 group :mysql do
