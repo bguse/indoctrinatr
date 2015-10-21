@@ -64,7 +64,7 @@ group :development do
   gem 'quiet_assets', '~> 1.1.0'
   gem 'sqlite3', '~> 1.3.9'
   gem 'annotate', '~> 2.6.5'
-  gem 'rubocop', '~> 0.28.0'
+  gem 'rubocop', '~> 0.34'
 end
 
 gem 'rails-latex', '~> 1.0'
