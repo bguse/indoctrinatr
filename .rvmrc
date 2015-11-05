@@ -1,0 +1,16 @@
+# @see https://rvm.beginrescueend.com/workflow/rvmrc/
+
+#shopt -s expand_aliases
+
+rvm use ruby-2.1.5@indoc --create
+
+if [ -f Gemfile ] && ! command -v bundle >/dev/null; then
+  gem install bundler
+fi
+
+alias cap="bundle exec cap"
+alias irb="bundle exec irb"
+alias guard="bundle exec guard"
+alias rake="bundle exec rake"
+alias cucumber="bundle exec cucumber"
+alias compass="bundle exec compass"
