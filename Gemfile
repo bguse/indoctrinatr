@@ -35,7 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'debugger', group: [:development, :test]
 
 # Sentry logging
-gem "sentry-raven", github: 'getsentry/raven-ruby'
+#gem "sentry-raven", github: 'getsentry/raven-ruby'
 
 # Frontend stuff
 gem 'foundation-rails', '~> 5.5'

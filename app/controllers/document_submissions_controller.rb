@@ -4,16 +4,16 @@ class DocumentSubmissionsController < ApplicationController
 
   rescue_from 'ERBRenderingError' do |exception|
     @error_message = exception.message
-    raven = Raven.capture_message "TeXRenderingError: #{@error_message}", extra: { erb_template: @erb_template }
-    @raven_event_id = raven[:event_id]
+    #raven = Raven.capture_message "TeXRenderingError: #{@error_message}", extra: { erb_template: @erb_template }
+    #@raven_event_id = raven[:event_id]
     render 'errors/erb_rendering_error', status: :internal_server_error, formats: :html
   end
 
   rescue_from 'TexRenderingError' do |exception|
     @error_message = exception.message
     @tex_log_file = File.read(@error_message[%r{\/.*\/input\.log}])
-    raven = Raven.capture_message "TeXRenderingError: #{@error_message}", extra: { erb_template: @erb_template, tex_template: @tex_template, tex_log_file: @tex_log_file }
-    @raven_event_id = raven[:event_id]
+    #raven = Raven.capture_message "TeXRenderingError: #{@error_message}", extra: { erb_template: @erb_template, tex_template: @tex_template, tex_log_file: @tex_log_file }
+    #@raven_event_id = raven[:event_id]
     render 'errors/tex_rendering_error', status: :internal_server_error, formats: :html
   end
 
